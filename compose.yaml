@@ -10,7 +10,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data # pgdata volume maps to /var inside container
     ports:
-      - "5432:5432"
+      - "5433:5432" # maps hostport to containerport - keeping host 5432 clean since we have a postgres server on host as well
     restart: always
 
   pgadmin:

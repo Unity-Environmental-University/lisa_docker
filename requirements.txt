@@ -1,0 +1,5 @@
+# Canvas
+instructure-dap-client[postgresql]==2.1.0
+
+# Environment and Configuration
+python-dotenv==1.2.1

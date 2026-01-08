@@ -53,7 +53,8 @@ def build_parser() -> argparse.ArgumentParser:
 ## the canvas namespace from the DAP, which is a lot of tables
 async def init_or_sync_db_tables(table_names:str, operation:str) -> None:
     ## ensure log directory exists
-    log_dir = os.path.join("logs", "db_init_sync")
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    log_dir = os.path.join(BASE_DIR, "logs", "db_init_sync")
     os.makedirs(log_dir, exist_ok=True)
 
     ## build timestamped filename

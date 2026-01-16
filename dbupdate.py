@@ -132,7 +132,7 @@ async def main(argv=None):
 
     tables = ""
     if args.table_name_s == "all":
-        tables = "users,courses,enrollment_terms,assignments,submissions,enrollments"
+        tables = "users,courses,enrollment_terms,assignments,submissions,enrollments,content_tags,context_modules"
     elif " " in args.table_name_s:
         print("Error: Table names cannot contain spaces")
         sys.exit(2)

@@ -126,21 +126,41 @@ async def init_or_sync_db_tables(table_names:str, operation:str) -> None:
         else:
             raise ValueError(f"Error: Invalid operation: {operation}")
 
+def validate_table_names(tables_str:str) -> str:
+    allowed_tables = {
+        "users", 
+        "courses", 
+        "enrollment_terms", 
+        "assignments", 
+        "submissions", 
+        "enrollments", 
+        "content_tags", 
+        "context_modules"
+    }
+
+    if tables_str == "all":
+        return ','.join(allowed_tables)
+
+    tables_str = tables_str.lower().replace(" ", "")  # Remove any whitespace
+    table_names = [t for t in tables_str.split(",") if t]  # Split and filter out empty strings
+
+    for table in table_names:
+        if table not in allowed_tables:
+            print(f"Error: Invalid table name: {table}")
+            sys.exit(2)
+
+    return ','.join(table_names)
+
+async def operate(operation:str, tables_str = "all"):
+    tables_str = validate_table_names(tables_str)
+
+    await init_or_sync_db_tables(tables_str, operation)
+
 async def main(argv=None):
     parser = build_parser()
     args = parser.parse_args(argv)
 
-    tables = ""
-    if args.table_name_s == "all":
-        tables = "users,courses,enrollment_terms,assignments,submissions,enrollments,content_tags,context_modules"
-    elif " " in args.table_name_s:
-        print("Error: Table names cannot contain spaces")
-        sys.exit(2)
-    else:
-        tables = args.table_name_s
-
-    await init_or_sync_db_tables(tables, args.operation)
-
+    await operate(args.operation, args.table_name_s)
 
 if __name__ == "__main__":
     asyncio.run(main())

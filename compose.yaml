@@ -2,7 +2,7 @@ services:
   postgres:
     container_name: postgres-lisa
     build: .
-    image: postgres-lisa-img  # name of the image we build
+    image: postgres-lisa-img  # name of the image we build from dockerfile
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PW}
